@@ -53,8 +53,23 @@
             </node>
 
             <!-- VBS depth control -->
+            <!-- TODO: Check for the topics, same as in the python file -->
             <group ns="vbs">
-                <node name="pid_actuator_vbs" pkg="sam_basic_controllers" type="pid_actuator_trim" output="screen">
+                <node name="depth_control" pkg="sam_basic_controllers" type="depth_control_node.py" output="screen">
+                    <param name="Ki" value="1.0" />
+                    <param name="Kp" value="40.0" />
+                    <param name="Kd" value="1.0" />
+                    <param name="Kaw" value="1.0" />
+                    <param name="vbs_neutral" value="52.0" />
+
+                    <param name="vbs_topic" value="/$(arg namespace)/core/vbs_cmd" />
+                    <param name="current_depth_topic" value="/$(arg namespace)/dr/depth" />
+                    <param name="depth_setpoint_topic" value="/$(arg namespace)/ctrl/lookahead_depth" />
+                
+                </node>
+
+                <!-- ROS PID Package -->
+                <!-- <node name="pid_actuator_vbs" pkg="sam_basic_controllers" type="pid_actuator_trim" output="screen">
                     <param name="topic_from_controller" value="control_action" />
                     <param name="topic_to_actuator" value="/$(arg namespace)/core/vbs_cmd" />
                     <param name="topic_from_plant" value="/$(arg namespace)/dr/depth" />
@@ -80,7 +95,7 @@
                     <remap from="setpoint" to="setpoint_pid" />
                     <remap from="pid_enable" to="pid_enable" />
                     <param name="setpoint_timeout" value="0.1" />
-                </node>
+                </node> -->
             </group>
 
             <!-- LCG pitch control -->
