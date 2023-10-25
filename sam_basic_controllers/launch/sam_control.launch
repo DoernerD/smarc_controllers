@@ -56,10 +56,10 @@
             <!-- TODO: Check for the topics, same as in the python file -->
             <group ns="vbs">
                 <node name="depth_control" pkg="sam_basic_controllers" type="depth_control_node.py" output="screen">
-                    <param name="Ki" value="1.0" />
+                    <param name="Ki" value="0.0" />
                     <param name="Kp" value="40.0" />
                     <param name="Kd" value="1.0" />
-                    <param name="Kaw" value="1.0" />
+                    <param name="Kaw" value="0.0" />
                     <param name="vbs_neutral" value="52.0" />
 
                     <param name="vbs_topic" value="/$(arg namespace)/core/vbs_cmd" />
@@ -100,7 +100,21 @@
 
             <!-- LCG pitch control -->
             <group ns="lcg">
-                <node name="pid_actuator_lcg" pkg="sam_basic_controllers" type="pid_actuator_trim"  output="screen" >
+                <node name="depth_control" pkg="sam_basic_controllers" type="pitch_control_node.py" output="screen">
+                    <param name="Ki" value="0.0" />
+                    <param name="Kp" value="60.0" />
+                    <param name="Kd" value="6.0" />
+                    <param name="Kaw" value="0.0" />
+                    <param name="lcg_neutral" value="35.0" />
+
+                    <param name="lcg_topic" value="/$(arg namespace)/core/lcg_cmd" />
+                    <param name="current_pitch_topic" value="/$(arg namespace)/dr/pitch" />
+                    <param name="pitch_setpoint_topic" value="/$(arg namespace)/ctrl/pitch_setpoint" />
+                
+                </node>
+
+                <!-- ROS PID Package -->
+                <!-- <node name="pid_actuator_lcg" pkg="sam_basic_controllers" type="pid_actuator_trim"  output="screen" >
                     <param name="topic_from_controller" value="control_action" />
                     <param name="topic_to_actuator" value="/$(arg namespace)/core/lcg_cmd" />
                     <param name="topic_from_plant" value="/$(arg namespace)/dr/pitch" />
@@ -126,7 +140,7 @@
                     <remap from="setpoint" to="setpoint_pid" />
                     <remap from="pid_enable" to="pid_enable" />
                     <param name="setpoint_timeout" value="0.1" /> 
-                </node>
+                </node> -->
             </group>
         
         </group>
